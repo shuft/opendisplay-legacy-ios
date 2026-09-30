@@ -1,0 +1,7 @@
+# Toolchain, SDK, reference checkouts and per-machine SSH setup (scripts/bootstrap.sh recreates the toolchain)
+.local/
+# Build output
+.theos/
+packages/
+*.deb
+.DS_Store

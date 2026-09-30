@@ -1,0 +1,9 @@
+Package: org.opendisplay-legacy.receiver
+Name: LegacyDisplay
+Version: 0.1.0
+Architecture: iphoneos-arm
+Description: Unofficial OpenDisplay receiver for jailbroken iOS 12 devices. Use an old iPad as a second Mac display over USB or Wi-Fi.
+Maintainer: LegacyDisplay contributors
+Author: LegacyDisplay contributors
+Section: Utilities
+Depends: firmware (>= 12.0)
