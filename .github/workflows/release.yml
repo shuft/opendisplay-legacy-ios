@@ -1,0 +1,62 @@
+name: Release
+
+# Pushing a tag like v0.1.0 builds the .deb on macOS, attaches it to a GitHub
+# Release and publishes the APT source to GitHub Pages. Running the workflow
+# by hand only builds, keeping the result as a workflow artifact.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Fetch theos, the iOS SDK and ldid
+        run: scripts/bootstrap.sh
+      - name: Build the release and the APT source
+        run: scripts/release.sh
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release
+          path: dist/
+          if-no-files-found: error
+      - uses: actions/upload-pages-artifact@v5
+        if: github.ref_type == 'tag'
+        with:
+          path: dist/repo
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: release
+          path: dist
+      - name: Create the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.deb dist/SHA256SUMS \
+            --repo "$GITHUB_REPOSITORY" --verify-tag \
+            --title "LegacyDisplay ${GITHUB_REF_NAME#v}" \
+            --notes-file dist/release-notes.md
+
+  pages:
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LegacyDisplay</title>
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  /* Plain CSS on purpose: this page has to work in iOS 12 Safari. */
+  body {
+    margin: 0;
+    padding: 32px 16px 48px;
+    background: #f4f5f8;
+    color: #1c1d22;
+    font: 17px/1.5 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 620px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 28px; }
+  header img { width: 96px; height: 96px; border-radius: 22px; }
+  h1 { font-size: 30px; margin: 12px 0 4px; }
+  .tagline { margin: 0; color: #5b5e69; }
+  .version { margin: 6px 0 0; font-size: 14px; color: #8a8d97; }
+  section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+  h2 { font-size: 19px; margin: 0 0 8px; }
+  h2 span { color: #2f7de1; margin-right: 6px; }
+  p { margin: 0 0 10px; }
+  p:last-child { margin-bottom: 0; }
+  .buttons { margin: 14px 0 10px; }
+  .button {
+    display: block;
+    margin-bottom: 10px;
+    padding: 13px 16px;
+    border-radius: 11px;
+    background: #2f7de1;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+  }
+  .button.secondary { background: #e7ecf5; color: #1d4f99; }
+  code {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #eef0f4;
+    font: 15px Menlo, monospace;
+    word-break: break-all;
+    -webkit-user-select: all;
+    user-select: all;
+  }
+  .fine { font-size: 14px; color: #6b6e78; }
+  a { color: #2f7de1; }
+  footer { text-align: center; font-size: 14px; color: #8a8d97; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #111216; color: #e8e9ee; }
+    .tagline, .fine { color: #a3a6b0; }
+    section { background: #1d1f25; box-shadow: none; }
+    code { background: #2a2d35; }
+    .button.secondary { background: #263247; color: #9cc4ff; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.png" alt="">
+    <h1>LegacyDisplay</h1>
+    <p class="tagline">Use an old jailbroken iPad as a second display for your Mac.</p>
+    <p class="version">Version {{VERSION}}</p>
+  </header>
+
+  <section>
+    <h2><span>1</span>On your Mac</h2>
+    <p>Install <a href="https://github.com/peetzweg/opendisplay/releases/latest">OpenDisplay</a>: download
+      <b>OpenDisplay.dmg</b> and drag the app into Applications.</p>
+    <p>Open it and allow <b>Screen Recording</b> and <b>Accessibility</b> when asked, then quit it (⌘Q) and open it again.</p>
+  </section>
+
+  <section>
+    <h2><span>2</span>On your iPad</h2>
+    <p>Open this page in Safari on the iPad and tap the button for your package manager, then install <b>LegacyDisplay</b>.</p>
+    <div class="buttons">
+      <a class="button" href="sileo://source/{{SITE_URL}}">Add to Sileo</a>
+      <a class="button" href="zbra://sources/add/{{SITE_URL}}">Add to Zebra</a>
+      <a class="button" href="cydia://url/https://cydia.saurik.com/api/share#?source={{SITE_URL}}">Add to Cydia</a>
+    </div>
+    <p class="fine">Or add this source by hand:</p>
+    <code>{{SITE_URL}}</code>
+    <p class="fine" style="margin-top: 10px">Or <a href="{{DEB}}">download the .deb</a> and open it in Filza.</p>
+  </section>
+
+  <section>
+    <h2><span>3</span>Connect</h2>
+    <p>Open LegacyDisplay on the iPad, then plug it into the Mac or put both on the same Wi-Fi.
+      The iPad appears in System Settings › Displays like any other monitor.</p>
+    <p class="fine">One finger clicks and drags, two fingers scroll, and a three-finger tap shows connection stats.
+      After rebooting the iPad, re-run your jailbreak before opening the app.</p>
+  </section>
+
+  <section>
+    <h2>Requirements</h2>
+    <p class="fine">A 64-bit iPad or iPhone (A7 or newer) with a rootful jailbreak on iOS 12 or later, such as Chimera,
+      unc0ver or checkra1n. On iPadOS 15 and later, use OpenDisplay's official app instead.</p>
+  </section>
+
+  <footer>
+    <p><a href="{{REPO_URL}}">Source code</a> · MIT licensed · Not affiliated with OpenDisplay</p>
+  </footer>
+</main>
+</body>
+</html>

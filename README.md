@@ -27,26 +27,27 @@ Mac: OpenDisplay (unmodified, notarized)          iPad: LegacyDisplay
 The Mac side is the stock OpenDisplay app. It creates the virtual display
 itself, so no BetterDisplay or similar is needed.
 
-## Requirements
+## Install
 
-- **iPad or iPhone:** 64-bit (A7 or later), jailbroken on iOS 12 or later with
-  a rootful jailbreak (Chimera, unc0ver, checkra1n…), with OpenSSH installed.
-- **Mac:** [OpenDisplay](https://github.com/peetzweg/opendisplay/releases/latest)
-  (download `OpenDisplay.dmg`, drag the app to /Applications, grant Screen
-  Recording and Accessibility, then quit and reopen it).
-- **To build:** the macOS Command Line Tools (`xcode-select --install`). Full
-  Xcode isn't needed.
+### On your Mac
 
-## Build and install
+Install [OpenDisplay](https://github.com/peetzweg/opendisplay/releases/latest):
+download `OpenDisplay.dmg` and drag the app into Applications. Open it, allow
+**Screen Recording** and **Accessibility** when asked, then quit it (⌘Q) and
+open it again.
 
-```bash
-scripts/bootstrap.sh                   # theos, iOS 14.5 SDK and ldid into .local/
-IPAD=192.168.1.50 scripts/install.sh   # build the .deb, install it over SSH
-```
+### On your iPad
 
-`install.sh` runs `dpkg -i` and `uicache` on the device, so the icon appears
-without a respring. With `.local/ssh/config` defining a `Host ipad`, you can
-leave `IPAD` unset.
+You need a 64-bit iPad or iPhone (A7 or newer) with a rootful jailbreak on
+iOS 12 or later, such as Chimera, unc0ver or checkra1n.
+
+- **Easiest:** open **https://shuft.github.io/opendisplay-legacy-ios/** in
+  Safari on the iPad, tap the button for Sileo, Zebra or Cydia, then install
+  **LegacyDisplay**. You can also add that URL as a source by hand. Updates
+  then arrive through your package manager like any other tweak.
+- **Or** download the `.deb` from
+  [Releases](https://github.com/shuft/opendisplay-legacy-ios/releases/latest)
+  and open it in Filza.
 
 ## Using it
 
@@ -62,6 +63,31 @@ round-trip time).
 
 **After a reboot:** re-run your jailbreak (for Chimera, open the Chimera
 app) before opening LegacyDisplay. The app itself never expires.
+
+## Building from source
+
+You only need the macOS Command Line Tools (`xcode-select --install`), not Xcode.
+
+```bash
+scripts/bootstrap.sh                   # theos, iOS 14.5 SDK and ldid into .local/
+IPAD=192.168.1.50 scripts/install.sh   # build the .deb, install it over SSH
+```
+
+The device needs OpenSSH. `install.sh` runs `dpkg -i` and `uicache` on it, so
+the icon appears without a respring. With `.local/ssh/config` defining a
+`Host ipad`, you can leave `IPAD` unset.
+
+## Releasing
+
+1. Bump `Version` in `control` and `CFBundleShortVersionString` in
+   `Resources/Info.plist`. The release script refuses to build if they differ.
+2. Commit, tag and push: `git tag v0.2.0 && git push origin main v0.2.0`.
+
+The [Release workflow](.github/workflows/release.yml) then builds on macOS,
+attaches the `.deb` to a GitHub Release, and publishes the package source to
+GitHub Pages (Settings › Pages › Source must be set to **GitHub Actions**). The
+source carries only the latest version. `scripts/release.sh` does the same
+build locally into `dist/`.
 
 ## Protocol support
 
