@@ -48,6 +48,9 @@ iOS 12 or later, such as Chimera, unc0ver or checkra1n.
 - **Or** download the `.deb` from
   [Releases](https://github.com/shuft/opendisplay-legacy-ios/releases/latest)
   and open it in Filza.
+- **From the command line**, the source is unsigned (like most jailbreak
+  sources), so mark it trusted:
+  `echo "deb [trusted=yes] https://shuft.github.io/opendisplay-legacy-ios/ ./" > /etc/apt/sources.list.d/legacydisplay.list`
 
 ## Using it
 
